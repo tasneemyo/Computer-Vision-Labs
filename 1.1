@@ -1,0 +1,37 @@
+import cv2
+import numpy as np
+import matplotlib.pyplot as plt
+
+# Load images (Replace with actual paths)
+book_img = cv2.imread(r'C:\Users\User\Downloads\WhatsApp Image 2025-03-22 at 2.01.19 PM.jpeg')  # Image of the book
+frame_img = cv2.imread(r'C:\Users\User\Downloads\WhatsApp Image 2025-03-22 at 2.01.46 PM.jpeg', cv2.IMREAD_GRAYSCALE)  # First frame of the video
+
+# Initialize SIFT detector
+sift = cv2.SIFT_create()
+
+# Detect keypoints and descriptors
+kp1, des1 = sift.detectAndCompute(book_img, None)
+kp2, des2 = sift.detectAndCompute(frame_img, None)
+
+# Use BFMatcher with KNN (k=2)
+bf = cv2.BFMatcher()
+matches = bf.knnMatch(des1, des2, k=2)
+
+# Apply ratio test
+good_matches = []
+for m, n in matches:
+    if m.distance < 0.75 * n.distance:  # Lowe's ratio test
+        good_matches.append(m)
+
+# Select top 50 matches
+good_matches = sorted(good_matches, key=lambda x: x.distance)[:50]
+
+# Draw matches
+match_img = cv2.drawMatches(book_img, kp1, frame_img, kp2, good_matches, None, flags=cv2.DrawMatchesFlags_NOT_DRAW_SINGLE_POINTS)
+
+# Show the image
+plt.figure(figsize=(10, 5))
+plt.imshow(match_img)
+plt.title("Feature Correspondences")
+plt.axis("off")
+plt.show()
