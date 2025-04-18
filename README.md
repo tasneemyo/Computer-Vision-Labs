@@ -8,4 +8,4 @@
 ## Assignment 02
 
 - Part 1: Augmented Reality with Planar Homographies
-- Part 2: Image Mosaics
+- Part 2: [Image Mosaics](Assignment02/image-stitcher.ipynb)
