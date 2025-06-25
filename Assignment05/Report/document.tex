@@ -2,19 +2,19 @@
 \usepackage[a4paper, tmargin=0.75in, lmargin=0.80in, rmargin=0.80in, bmargin=1in]{geometry}
 \usepackage{hyperref}
 
-
 \usepackage{graphicx}
 \pagestyle{empty}
 \usepackage{xcolor}
 \usepackage{subfig}
+\usepackage{float} % <-- added this
 
 \begin{document}
 	
 	\begin{center}
-		{\Huge{Computer Vision Assignment}} \\
+		{\Huge{CV Lab 05 | Object Detection}} \\
 		\vspace{2mm}
-		
 	\end{center}
+	
 	\section*{\textcolor{blue}{Datasets}}
 	\subsection{COCO }
 	The \textbf{Common Objects in Context (COCO)} dataset is a large-scale benchmark dataset developed by Microsoft. It contains over 200,000 labeled images and more than 80 object categories with instance segmentation, keypoint annotations, and captioning.
@@ -27,6 +27,7 @@
 	\end{itemize}
 	
 	COCO is commonly used to pretrain deep learning object detectors such as Faster R-CNN, RetinaNet, and YOLO. It features complex scenes with multiple objects and varying scales.
+	
 	\subsection{Pascal VOC}
 	\textbf{Pascal VOC (Visual Object Classes)} is a benchmark dataset for object detection, segmentation, and classification. The most commonly used versions are VOC 2007 and VOC 2012.
 	
@@ -38,6 +39,7 @@
 	\end{itemize}
 	
 	Pascal VOC is widely used for academic benchmarking, especially for models trained on smaller datasets or when COCO’s scale is unnecessary.
+	
 	\section*{\textcolor{blue}{Models}}
 	\subsection{RetinaNet}
 	\textbf{RetinaNet} is a one-stage object detection model. It addresses the foreground-background class imbalance by introducing the novel \textbf{focal loss} function.
@@ -49,8 +51,92 @@
 		\item \textbf{Advantages:} Faster than two-stage models like Faster R-CNN, while maintaining high accuracy
 	\end{itemize}
 	
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=0.85\linewidth]{images/retinanet_arch.png} % <-- replace with your filename
+		\caption{RetinaNet Architecture}
+	\end{figure}
+	
+	\subsection{Faster R-CNN}
+	\textbf{Faster R-CNN} is a two-stage object detection model proposed by Ren et al. It significantly improved detection speed and accuracy compared to earlier models by introducing a Region Proposal Network (RPN) that shares convolutional features with the detection network.
+	
+	\begin{itemize}
+		\item \textbf{Backbone(feature extractor):} Originally VGG-16; later implementations commonly use ResNet-50 or ResNet-101, often combined with a Feature Pyramid Network (FPN) for better multi-scale representation.
+		
+		
+		\item \textbf{Architecture:} 
+		\begin{itemize}
+			\item \textbf{Stage 1:} The Region Proposal Network (RPN) generates object proposals (regions likely to contain objects).
+			\item \textbf{Stage 2:} The proposals are refined and classified by a detection head that performs bounding box regression and classification.
+			\item Shared convolutional layers between RPN and detection head increase efficiency.
+		\end{itemize}
+		
+		\item \textbf{Loss functions:}
+		\begin{itemize}
+			\item RPN Loss: Binary classification + bounding box regression
+			\item Final Detection Head Loss: Multi-class classification + refined box regression
+		\end{itemize}
+		
+		\item \textbf{Advantages:}
+		\begin{itemize}
+			\item High accuracy on complex scenes and overlapping objects
+			\item End-to-end trainable with shared features for speed and consistency
+		\end{itemize}
+	\end{itemize}
+	
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=0.85\linewidth]{images/faster-rcnn.png} % <-- replace with your filename
+		\caption{Faster R-CNN Architecture: Feature extraction, Region Proposal Network, and detection head}
+	\end{figure}
+	
+	
+	\subsection{DETR (DEtection TRansformer)}
+	\textbf{DETR} is a one-stage object detection model introduced by Facebook AI Research. Unlike traditional detectors that rely on anchor boxes and region proposals, DETR formulates object detection as a direct set prediction problem using a Transformer encoder-decoder architecture.
+	
+	\begin{itemize}
+		\item \textbf{Backbone:} ResNet-50 or ResNet-101 to extract visual features
+		\item \textbf{Architecture:} Transformer encoder-decoder applied on image features to predict a fixed-size set of objects
+		\item \textbf{Loss function:} Hungarian matching loss combining classification loss and box regression loss
+		\item \textbf{Advantages:} Simpler pipeline without the need for anchors or NMS (Non-Maximum Suppression), and competitive performance on COCO
+	\end{itemize}
+	
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=0.85\linewidth]{images/detr_architecture.png} % <-- replace with your filename
+		\caption{DETR Architecture}
+	\end{figure}
+	
+	
+	
+	
 	In our assignment, we used a \textbf{COCO-pretrained RetinaNet} and evaluated its performance on the VOC 2012 validation set. Evaluation was done using \texttt{torchmetrics}'s \texttt{MeanAveragePrecision} metric at an IoU threshold of 0.5.
 	
+	\subsection{YOLO}
+	
+	YOLO (You Only Look Once) is a family of real-time object detectors that frame detection as a single-stage regression problem, predicting bounding boxes and class probabilities directly from full images in one forward pass of the network.
+	
+	Developed initially by Joseph Redmon, YOLO has evolved through several versions (YOLOv1 → YOLOv8), with contributions from the community and frameworks like Ultralytics. YOLO is well-known for its speed, efficiency, and deployability in real-time systems such as drones, mobile apps, and autonomous vehicles.
+	
+	\begin{itemize}
+		\item One-stage detector (no region proposal step).
+		\item Fully convolutional.
+		\item Uses a grid-based prediction mechanism.
+		
+	\end{itemize}
+	
+	
+	
+	
+	
+	
+	Newer versions (e.g., YOLOv5/YOLOv8) are anchor-free, support multi-scale predictions, and have state-of-the-art accuracy.
+	
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=0.85\linewidth]{images/yolo.png} % <-- replace with your filename
+		\caption{DETR Architecture}
+	\end{figure}
 	
 	\section*{\textcolor{blue}{Evaluation Summary}}
 	\subsection*{\textcolor{red}{RetineNet}}
@@ -59,8 +145,7 @@
 	
 	\begin{itemize}
 		\item \textbf{mAP@0.5:0.95} 0.4151
-		 
-		 \item \textbf{mAP@0.5} 0.618
+		\item \textbf{mAP@0.5} 0.618
 		\item \textbf{mAP@0.75} 0.4391
 	\end{itemize}
 	
@@ -69,36 +154,222 @@
 	
 	\begin{itemize}
 		\item \textbf{mAP@0.5:} 0.585
-		
 		\item \textbf{Best performance:} Large objects
+	\end{itemize}
+	
+	\begin{figure}[H]
+		\centering
+		\subfloat[\centering Failure]{{\includegraphics[width=5cm]{images/coco_f1.png} }}%
+		\qquad
+		\subfloat[\centering Success]{{\includegraphics[width=5cm]{images/coco_s1.png} }}%
+		\caption{COCO Test Cases}
+	\end{figure}
+	
+	\begin{figure}[H]
+		\centering
+		\subfloat[\centering Failure]{{\includegraphics[width=5cm]{images/voc_f1.png} }}%
+		\qquad
+		\subfloat[\centering Success]{{\includegraphics[width=5cm]{images/voc_s1.png} }}%
+		\caption{VOC Test Cases}
+	\end{figure}
+	
+	\textbf{RetinaNet: Failure Cases}
+	
+	Despite being efficient and accurate, RetinaNet and other one-stage detectors face several limitations:
+	
+	\begin{itemize}
+		
+		\item \textbf{Residual Class Imbalance} \\
+		Although focal loss helps mitigate class imbalance, rare object categories may still be underrepresented and detected poorly.
+		
+		\item \textbf{Anchor Mismatch and Design Limitations} \\
+		RetinaNet relies on hand-designed anchor boxes. If objects have unusual aspect ratios, they may not be well-covered by anchors, reducing localization accuracy.
+		
+		\item \textbf{Domain Shift and Poor Generalization} \\
+		RetinaNet may generalize poorly to new domains or data distributions not seen during training, especially in the absence of explicit region proposal mechanisms.
+		
+		\item \textbf{Computational Cost for Edge Deployment} \\
+		While faster than two-stage detectors, RetinaNet can still be too resource-intensive for real-time inference on low-power edge devices without optimization.
 		
 	\end{itemize}
-	\begin{figure}[h]
+	
+	
+	% =======================
+	\subsection*{\textcolor{red}{Faster R-CNN}}
+	% =======================
+	
+	\subsubsection*{{COCO Dataset}}
+	After running inference on the COCO validation set using Faster R-CNN, the following results were observed:
+	
+	\begin{itemize}
+		\item \textbf{mAP@0.5:0.95} 0.344
+		\item \textbf{mAP@0.5} 0.533
+		\item \textbf{mAP@0.75} 0.378
+	\end{itemize}
+	
+	\subsubsection*{{VOC Dataset}}
+	\begin{itemize}
+		\item \textbf{mAP@0.5:} 0.4191
+	\end{itemize}
+	
+	\begin{figure}[H]
 		\centering
-		\subfloat[\centering Failure]{{\includegraphics[width=5cm]{coco_f1.png} }}%
+		\subfloat[\centering Failure]{{\includegraphics[width=5cm]{images/rcnn-fail-coco.png} }}%
 		\qquad
-		\subfloat[\centering Success]{{\includegraphics[width=5cm]{coco_s1.png} }}%
-		\caption{COCO Test Cases}%
+		\subfloat[\centering Success]{{\includegraphics[width=5cm]{images/rcnn-success-coco.png} }}%
+		\caption{COCO Test Cases}
+	\end{figure}
+	
+	\begin{figure}[H]
+		\centering
+		\subfloat[\centering Failure]{{\includegraphics[width=5cm]{images/image.png} }}%
+		\qquad
+		\subfloat[\centering Success]{{\includegraphics[width=5cm]{images/rcnn-success-voc.png} }}%
+		\caption{VOC Test Cases}
+	\end{figure}
+	
+	\textbf{Faster R-CNN: Failure Cases}
+	
+	While Faster R-CNN is a powerful object detection model, it has several known limitations and failure cases:
+	
+	\begin{itemize}
 		
+		\item \textbf{Small or Tiny Objects} \\
+		Due to aggressive downsampling in the backbone CNN. As a result, such objects may disappear in the feature maps and not be proposed by the RPN.
+		
+		\item \textbf{Overlapping or Crowded Objects} \\
+		RPN may generate a single proposal for multiple objects. This causes the detector to confuse or miss individual instances.
+		
+		\item \textbf{High-Speed or Real-Time Applications} \\
+		Faster R-CNN is not optimized for speed. In scenarios that require real-time inference (e.g., robotics, autonomous driving), it may be too slow without hardware acceleration.
+		
+		\item \textbf{Background Confusion and Class Imbalance} \\
+		In scenes with cluttered backgrounds or few foreground objects, the model can generate many false positives. Background textures may be incorrectly detected as objects, especially if the dataset is imbalanced.
+		
+	\end{itemize}
+	
+	
+	% =======================
+	\subsection*{\textcolor{red}{DETR (Transformer-based Detector)}}
+	\subsubsection* .DETR is a fully end-to-end object detector based on the Transformer architecture. It simplifies the detection pipeline by removing the need for anchor boxes and non-max suppression (NMS).
+	
+	\textbf{Key Highlights:}
+	\begin{itemize}
+		\item Uses bipartite matching to assign predicted boxes to ground truth
+		\item CNN backbone + Transformer encoder-decoder
+		\item Trains slower but offers simpler and more elegant predictions
+	\end{itemize}
+	
+	\begin{figure}[H]
+		\centering
+		\subfloat[\centering ]{{\includegraphics[width=5cm]{images/detr1.png} }}%
+		\qquad
+		\subfloat[\centering ]{{\includegraphics[width=5cm]{images/detr2.png} }}%
+		\caption{COCO Test Cases}
+	\end{figure}
+	
+	\begin{figure}[H]
+		\centering
+		\subfloat[\centering ]{{\includegraphics[width=5cm]{images/detr_f1.png} }}%
+		\qquad
+		\subfloat[\centering ]{{\includegraphics[width=5cm]{images/detr_s1.png} }}%
+		\caption{VOC Test Cases}
 	\end{figure}
 	
 	
 	
-	\begin{figure}[h]
+	
+		\subsection*{\textcolor{red}{YOLO}}
+	\subsubsection*{{COCO Dataset}}
+	After running inference on the COCO validation set, the following results were obtained:
+
+	\begin{itemize}
+		\item \textbf{mAP@0.5:0.95} 0.3133
+		\item \textbf{mAP@0.5} 0.4226
+		\item \textbf{mAP@0.75} 0.3452
+	\end{itemize}
+	
+	\subsubsection*{{VOC Dataset}}
+	After running inference on the VOC 2012 validation set, the following results were obtained:
+
+	\begin{itemize}
+		\item \textbf{mAP@0.5:} 0.504
+	
+		\item \textbf{Best performance:} Large objects
+	\end{itemize}
+	
+	\begin{figure}[H]
 		\centering
-		\subfloat[\centering Failure]{{\includegraphics[width=5cm]{voc_f1.png} }}%
+		\subfloat[\centering Failure]{{\includegraphics[width=5cm]{images/yolo_f1.png} }}%
 		\qquad
-		\subfloat[\centering Success]{{\includegraphics[width=5cm]{voc_s1.png} }}%
-		\caption{VOC Test Cases}%
-		
+		\subfloat[\centering Success]{{\includegraphics[width=5cm]{images/yolo_s1.png} }}%
+		\caption{COCO Test Cases}
 	\end{figure}
 	
+	\begin{figure}[H]
+		\centering
+		\subfloat[\centering Failure]{{\includegraphics[width=5cm]{images/yolo_f2.png} }}%
+		\qquad
+		\subfloat[\centering Success]{{\includegraphics[width=5cm]{images/yolo_s2.png} }}%
+		\caption{VOC Test Cases}
+	\end{figure}
+	
+	\textbf{YOLO: Failure Cases}
+	
+	Despite its success, YOLO has several failure modes, especially when deployed on challenging real-world data:
+	
+	\begin{itemize}
+		
+		\item YOLO tends to struggle with detecting very small objects
+		
+		\item YOLO may confuse overlapping or occluded objects, often merging them into one box or missing some.
+		
+		\item Visually similar objects are sometimes misclassified, especially under low light or from unusual angles.
+		
+		\item  YOLO may fail to detect objects in unusual contexts, e.g., a boat in a desert, due to training data bias.
+		
+	\end{itemize}
 	
 	
+	
+	
+	
+	\begin{table}[h!]
+		\centering
+		\resizebox{\textwidth}{!}{%
+			\begin{tabular}{|l|c|c|c|}
+				\hline
+				\textbf{Feature} & \textbf{Faster R-CNN} & \textbf{RetinaNet} & \textbf{DETR} \\
+				\hline
+				\textbf{Model Type} & Two-stage & One-stage & Transformer-based \\
+				\textbf{Backbone} & ResNet + FPN & ResNet + FPN & ResNet + Transformer \\
+				\textbf{Region Proposals} & RPN & None & None \\
+				\textbf{Anchors Used} & Yes & Yes & No \\
+				\textbf{NMS} & Yes & Yes & No \\
+				\textbf{Output Mechanism} & Class + box per proposal & Per-anchor prediction & Object queries \\
+				\textbf{Loss Function} & CE + Smooth L1 & Focal Loss + Smooth L1 & CE + GIoU + Hungarian \\
+				\textbf{Training Speed} & Fast & Moderate & Slow \\
+				\textbf{Inference Speed} & Slow & Fast & Moderate \\
+				\textbf{Small Object Perf.} & Good & Moderate & Poor \\
+				\textbf{Overlap Robustness} & High & Moderate & Low \\
+				\textbf{Real-Time Use} & Not suitable & Suitable & Not ideal \\
+				\textbf{Code Complexity} & Moderate & Low & High \\
+				\hline
+			\end{tabular}%
+		}
+		\caption{Comparison of Faster R-CNN, RetinaNet, and DETR.}
+		\label{tab:detector-comparison}
+	\end{table}
 	
 	\newpage
 	\bibliographystyle{aasjournal}
-	\bibliography{references}{}
-	
-	
+	\section*{References}
+	\begin{itemize}
+		\item Facebook Research. "VOC Evaluation Script from Detectron." \url{https://github.com/facebookresearch/Detectron/blob/main/detectron/datasets/voc_eval.py}
+		\item Machine Learning Space Blog. \url{https://machinelearningspace.com/blog/}
+		
+		
+		\item End-to-end Object Detection with Transformers. \url{https://github.com/facebookresearch/detr}
+		
+	\end{itemize}	
 \end{document}

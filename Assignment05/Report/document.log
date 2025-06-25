@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.141592653-2.6-0.999995 (MiKTeX 24.1) (preloaded format=xelatex 2024.3.8)  24 JUN 2025 16:05
+This is XeTeX, Version 3.141592653-2.6-0.999995 (MiKTeX 24.1) (preloaded format=xelatex 2024.3.8)  25 JUN 2025 18:52
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -268,14 +268,22 @@ Package caption Info: hyperref package is loaded.
 \sf@top=\skip54
 \sf@bottom=\skip55
 )
+(C:\Users\DELL\AppData\Local\Programs\MiKTeX\tex/latex/float\float.sty
+Package: float 2001/11/08 v1.3d Float enhancements (AL)
+\c@float@type=\count283
+\float@exts=\toks19
+\float@box=\box52
+\@float@everytoks=\toks20
+\@floatcapt=\box53
+)
 (C:\Users\DELL\AppData\Local\Programs\MiKTeX\tex/latex/l3backend\l3backend-xete
 x.def
 File: l3backend-xetex.def 2024-01-04 L3 backend support: XeTeX
-\g__graphics_track_int=\count283
-\l__pdf_internal_box=\box52
-\g__pdf_backend_object_int=\count284
-\g__pdf_backend_annotation_int=\count285
-\g__pdf_backend_link_int=\count286
+\g__graphics_track_int=\count284
+\l__pdf_internal_box=\box54
+\g__pdf_backend_object_int=\count285
+\g__pdf_backend_annotation_int=\count286
+\g__pdf_backend_link_int=\count287
 ) (document.aux)
 \openout1 = `document.aux'.
 
@@ -347,37 +355,83 @@ Package hyperref Info: Link coloring OFF on input line 11.
 
 Package caption Info: Begin \AtBeginDocument code.
 Package caption Info: subfig package v1.3 is loaded.
+Package caption Info: float package is loaded.
 Package caption Info: End \AtBeginDocument code.
+File: images/retinanet_arch.png Graphic file (type bmp)
+<images/retinanet_arch.png>
  [1
 
 ]
-File: coco_f1.png Graphic file (type bmp)
-<coco_f1.png>
-File: coco_s1.png Graphic file (type bmp)
-<coco_s1.png>
-File: voc_f1.png Graphic file (type bmp)
-<voc_f1.png>
-File: voc_s1.png Graphic file (type bmp)
-<voc_s1.png>
- [2] (document.bbl
+File: images/faster-rcnn.png Graphic file (type bmp)
+<images/faster-rcnn.png>
+File: images/detr_architecture.png Graphic file (type bmp)
+<images/detr_architecture.png>
+ [2]
+File: images/yolo.png Graphic file (type bmp)
+<images/yolo.png>
+ [3]
+File: images/coco_f1.png Graphic file (type bmp)
+<images/coco_f1.png>
+File: images/coco_s1.png Graphic file (type bmp)
+<images/coco_s1.png>
+File: images/voc_f1.png Graphic file (type bmp)
+<images/voc_f1.png>
+File: images/voc_s1.png Graphic file (type bmp)
+<images/voc_s1.png>
+ [4]
+File: images/rcnn-fail-coco.png Graphic file (type bmp)
+<images/rcnn-fail-coco.png>
+File: images/rcnn-success-coco.png Graphic file (type bmp)
+<images/rcnn-success-coco.png>
+ [5]
+File: images/image.png Graphic file (type bmp)
+<images/image.png>
+File: images/rcnn-success-voc.png Graphic file (type bmp)
+<images/rcnn-success-voc.png>
+ [6]
+File: images/detr1.png Graphic file (type bmp)
+<images/detr1.png>
+File: images/detr2.png Graphic file (type bmp)
+<images/detr2.png>
+File: images/detr_f1.png Graphic file (type bmp)
+<images/detr_f1.png>
+File: images/detr_s1.png Graphic file (type bmp)
+<images/detr_s1.png>
+File: images/yolo_f1.png Graphic file (type bmp)
+<images/yolo_f1.png>
+File: images/yolo_s1.png Graphic file (type bmp)
+<images/yolo_s1.png>
+ [7]
+File: images/yolo_f2.png Graphic file (type bmp)
+<images/yolo_f2.png>
+File: images/yolo_s2.png Graphic file (type bmp)
+<images/yolo_s2.png>
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <7> on input line 359.
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <5> on input line 359.
+ [8]
+Overfull \hbox (1.92346pt too wide) in paragraph at lines 368--369
+[]\TU/lmr/m/n/10 Facebook Research. ”VOC Evaluation Script from Detectron.” []$
+[][][][][] [] [] [] [][][][][][] [] [][][] [] [][][][][][][][][][][][][][][][] 
+[]
+ []
 
-LaTeX Warning: Empty `thebibliography' environment on input line 8.
-
-) [3] (document.aux)
+[9] (document.aux)
  ***********
 LaTeX2e <2023-11-01> patch level 1
 L3 programming layer <2024-01-04>
  ***********
 Package rerunfilecheck Info: File `document.out' has not changed.
-(rerunfilecheck)             Checksum: 6AEA26B514B97B2735055E17A1472FC8;270.
+(rerunfilecheck)             Checksum: 2D40E9A6480D7C6816B3B8BB139D5BFE;649.
  ) 
 Here is how much of TeX's memory you used:
- 10579 strings out of 409617
- 168013 string characters out of 5774217
- 1935191 words of memory out of 5000000
- 32586 multiletter control sequences out of 15000+600000
+ 10781 strings out of 409617
+ 172732 string characters out of 5774217
+ 1933191 words of memory out of 5000000
+ 32771 multiletter control sequences out of 15000+600000
  558501 words of font info for 46 fonts, out of 8000000 for 9000
  1348 hyphenation exceptions out of 8191
- 72i,10n,79p,299b,449s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 72i,10n,79p,345b,443s stack positions out of 10000i,1000n,20000p,200000b,200000s
 
-Output written on document.pdf (3 pages).
+Output written on document.pdf (9 pages).
